@@ -15,17 +15,19 @@ module.exports = function (app) {
   // app.route('/openProjects')
   //   .get(projectController.);
 
-  app.post('/api/projects', function(req, res){
-    console.log(req.body, " inside routes for projects long line help!");
-    projectsController.newProject(req);
-  });
-  app.get('/api/projects', function(req, res){
-    projectsController.newProject(req);
-  });
-  app.get('/api/project:id', function(req, res){
-    projectsController.findProject(req);
+//the routes here build off of the routes defined in services.js in the client side.
+//If we have "/projects" here, then we have "/projects/projects" in Paws for this to show up.
+//Routes are injected in middleware.js
+  app.post('/', function(req, res){
+    projectsController.newProject(req, res);
   });
 
-  // app.get('/:code', projectController.navToProject);
+  app.get('/', function(req, res){
+    projectsController.allProjects(req, res);
+  });
+
+  app.get('/:id', function(req, res){
+    projectsController.findProject(req, res);
+  });
 
 };

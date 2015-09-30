@@ -18,5 +18,9 @@ angular.module('drone.seekers', [])
       });
   }
 
+<<<<<<< HEAD
   $scope.getProfile();
+=======
+  // $scope.getProfile();
+>>>>>>> d236959f17b5d880b21d220539f10f3813762d99
   });
