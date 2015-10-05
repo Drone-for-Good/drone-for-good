@@ -3,24 +3,24 @@ angular.module('drone.services', [])
 
 //Map Factory
 .factory('MapFactory', function ($http) {
-  //get layer
-
-  // get project from pin click
-
-  // post project from pin drop
 
 })
-.factory('UserFactory', function ($http) {
+.factory('UserFactory', function ($http, $window) {
   //get all users function
-  var getUser = function () {
+  console.log("what do you mean")
+  var getUser = function (username) {
     return $http({
       method: 'GET',
-      url: '/api/user'
+      url: '/api/users/' + username
     })
     .then(function (resp) {
       return resp.data;
     });
   }
+
+  return {
+    getUser: getUser
+  };
 
 })
 .factory('ProjectFactory', function ($http) {
@@ -79,12 +79,14 @@ angular.module('drone.services', [])
   };
 
   var signup = function (user) {
+    console.log(user, " USER")
     return $http({
       method: 'POST',
       url: '/api/users/signup',
       data: user
     })
     .then(function (resp) {
+      console.log(resp, " RESP")
       return resp.data.token;
     });
   };
@@ -95,9 +97,9 @@ angular.module('drone.services', [])
 
   var signout = function () {
     $window.localStorage.removeItem('com.drone');
+    $window.localStorage.removeItem('com.drone.username');
     $location.path('/signin');
   };
-
 
   return {
     signin: signin,

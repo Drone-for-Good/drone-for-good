@@ -30,7 +30,7 @@ module.exports = {
   },
 
   signup: function (req, res, next) {
-
+    console.log("~~~~~are you a seeker?~~~~~", req.body);
     var username  = req.body.username,
         password  = req.body.password,
         email = req.body.email,
@@ -41,13 +41,12 @@ module.exports = {
         userType = req.body.userType,
         create,
         newUser;
-    console.log("there")
     var findOne = Q.nbind(User.findOne, User);
+
 
     // check to see if user already exists
     findOne({username: username})
       .then(function(user) {
-        console.log(user, " I AM USER, HEAR ME ROAR");
         if (user) {
           next(new Error('User already exist!'));
         } else {
@@ -59,10 +58,10 @@ module.exports = {
             email: email,
             location: location,
             firstName: firstName,
+            lastName: lastName,
             phoneNumber: phoneNumber,
             userType: userType
           };
-          //console.log("Before create:" , newUser)
           return create(newUser)
         }
       })
@@ -82,7 +81,7 @@ module.exports = {
     // then decode the token, which we end up being the user object
     // check to see if that user exists in the database
     var token = req.headers['x-access-token'];
-    console.log(token, "toknenenen")
+    console.log(token, ": is our token");
     if (!token) {
       next(new Error('No token'));
     } else {
@@ -104,7 +103,6 @@ module.exports = {
   },
 
   getUser: function(req, res, next, username) {
-    console.log(username, "~~~username~~~");
     var findUser = Q.nbind(User.findOne, User);
     findUser({username: username})
     .then(function(user) {
