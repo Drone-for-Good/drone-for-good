@@ -26,8 +26,8 @@ module.exports = {
             description: req.body.description,
             expirationDate: req.body.expirationDate,
             title: req.body.title,
-            seeker: req.body.seeker,
-            pilot: req.body.pilot
+            creator: req.body.username,
+            contactEmailAddress: req.body.emailAddress
           });
           return create(project);
         }
@@ -72,6 +72,4 @@ module.exports = {
         next(error);
       });
   }
-  //TODO add create new project and get all open projects
-
 };

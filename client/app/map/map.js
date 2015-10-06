@@ -1,6 +1,6 @@
 angular.module('drone.map', [])
 
-.controller('MapController', function ($scope, $location, ProjectFactory) {
+.controller('MapController', function ($scope, $location, ProjectFactory, UserFactory, $window) {
   //Get project data
   $scope.data = {};
   $scope.locations = [];
@@ -29,9 +29,12 @@ angular.module('drone.map', [])
         map = new google.maps.Map(mapCanvas, mapOptions)
 
         //Attach all no fly zone geoJSON data 
-        map.data.loadGeoJson('../../assets/5_mile_airport.geojson');
-        map.data.loadGeoJson('../../assets/us_military.geojson');
-        map.data.loadGeoJson('../../assets/us_national_park.geojson');
+        map.data.loadGeoJson('../../assets/ca_national_park.geojson');
+        map.data.loadGeoJson('../../assets/ca_military.geojson');
+        map.data.loadGeoJson('../../assets/5_mile_airport_ca.geojson');
+        map.data.loadGeoJson('../../assets/us_military_sub_CA.geojson');
+        map.data.loadGeoJson('../../assets/us_national_park_sub_CA.geojson');
+        map.data.loadGeoJson('../../assets/5_mile_airport_sub_CA.geojson');
 
 
         //Set main styles for no fly zone data
@@ -54,9 +57,7 @@ angular.module('drone.map', [])
   $scope.getProjects = function() {
     ProjectFactory.getProjects()
     .then(function (projectData) {
-      console.log("Projectdata: ", projectData)
       for (var i = 0; i < projectData.length; i++) {
-        console.log("Counting: ", i)
         var currentEntry = projectData[i];
         $scope.locations[i] = {
           lat: currentEntry.latitude, 
@@ -97,19 +98,33 @@ angular.module('drone.map', [])
 
   //Function for updating markers when new project submitted
   $scope.updateMarker = function(project) {
-    ProjectFactory.addProject(project)
-    .then(function () {
-    ProjectFactory.getProjects()
-    .then(function (projects) {
-      var currentEntry = projects[projects.length-1];
-      var newLocation = {
-          lat: currentEntry.latitude, 
-          lng: currentEntry.longitude
-      };
-      var newDescription = '<p>' + currentEntry.description + '</p>';
-      $scope.addMarker(newLocation, map, $scope.makeInfoWindow(newDescription));
-    })  
+    var username = $window.localStorage["com.drone.username"];
+    var project = $scope.project
+    project.username = username;
+
+    UserFactory.getUser(username)
+    .then(function(profile){
+      console.log("user email: ", profile)
+      project.emailAddress = profile.emailAddress;
     })
+    .then(function(){
+
+      ProjectFactory.addProject(project)
+      .then(function () {
+        ProjectFactory.getProjects()
+        .then(function (projects) {
+          var currentEntry = projects[projects.length-1];
+          var newLocation = {
+              lat: currentEntry.latitude, 
+              lng: currentEntry.longitude
+          };
+          var newDescription = '<p>' + currentEntry.description + '</p>';
+          $scope.addMarker(newLocation, map, $scope.makeInfoWindow(newDescription));
+        })  
+      })
+    })
+
+    
 
     // $scope.getProjects()
     // .then(function () {

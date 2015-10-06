@@ -1,23 +1,21 @@
 <div id='open-projects'>
 
   <!-- Use ng-repeat to list all project titles, location -->
-  <table>
+  <table class="table">
     <tbody>
       <tr class="project-header">
         <td>Title</td>
         <td>Location</td>
-        <td>Longitude</td>
-        <td>Latitude</td>
+        <td>Description</td>
+        <td>Contact</td>
       </tr>
-      <tr ng-repeat="project in data.openProjects">
+      <tr class="project-data" ng-repeat="project in data.openProjects">
         <td>{{ project.title }}</td>
         <td>{{ project.location }}</td>
-        <td>{{ project.latitude }}</td>
-        <td>{{ project.longitude }}</td>
+        <td>{{ project.description }}</td>
+        <td>{{ project.contactEmailAddress }}</td>
       </tr>
     </tbody>
   </table>
 
 </div>
-
-
