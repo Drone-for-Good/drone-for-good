@@ -1,10 +1,10 @@
 var express     = require('express');
-var http = require('http').Server(app);
 var app = express();
-var mongoose    = require('mongoose');
+// var mongodb = require('mongodb');
 var mongodb = require('mongodb');
+var mongoose    = require('mongoose');
 var uriUtil = require('mongodb-uri');
-
+var http = require('http').Server(app);
 
 var port = process.env.PORT || 3333;
 
