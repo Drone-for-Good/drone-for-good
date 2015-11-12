@@ -1,7 +1,7 @@
 var express     = require('express');
 var app = express();
 // var mongodb = require('mongodb');
-var mongodb = require('mongodb');
+// var mongodb = require('mongodb');
 var mongoose    = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var http = require('http').Server(app);
