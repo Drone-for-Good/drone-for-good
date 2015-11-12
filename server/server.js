@@ -1,5 +1,6 @@
 var express     = require('express');
 var mongoose    = require('mongoose');
+var http = require('http').Server(app);
 
 var app = express();
 var port = process.env.PORT || 3333;
