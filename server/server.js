@@ -1,16 +1,10 @@
 var express     = require('express');
 var app = express();
-// var mongodb = require('mongodb');
-// var mongodb = require('mongodb');
 var mongoose    = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var http = require('http').Server(app);
 
 var port = process.env.PORT || 3333;
-
-// var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/drone';
-
-// mongoose.connect(mongoURI); // connect to mongo database named drone
 
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 20000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 20000 } } };
